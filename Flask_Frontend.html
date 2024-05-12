@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Streaming Service</title>
+</head>
+<body>
+    <h1>Welcome to Music Streaming Service</h1>
+    <form action="/recommendations" method="GET">
+        <label for="user_id">Enter User ID:</label>
+        <input type="text" id="user_id" name="user_id">
+        <button type="submit">Get Recommendations</button>
+    </form>
+    <div id="recommendations"></div>
+    <script>
+        async function getRecommendations() {
+            const user_id = document.getElementById('user_id').value;
+            const response = await fetch(/recommendations/${user_id});
+            const data = await response.json();
+            const recommendationsDiv = document.getElementById('recommendations');
+            recommendationsDiv.innerHTML = '';
+            data.forEach((recommendation, index) => {
+                recommendationsDiv.innerHTML += <p>${index + 1}. ${recommendation}</p>;
+            });
+        }
+    </script>
+</body>
+</html>
